@@ -7,6 +7,7 @@ void inicializa_fila(filas *fila, int *prioridades) {
     }
 }
 
+<<<<<<< HEAD
 
 int insere_ordenado_fila(int x, filas *fila){
     srand((unsigned)time(NULL));
@@ -48,6 +49,47 @@ int insere_inicio_lista(int x, filas*fila)
 
     filas *item = malloc(sizeof(filas));
 
+=======
+
+int insere_ordenado_fila(int x, filas *fila){
+    filas *item, *ant = NULL, *p;
+
+    item = malloc(sizeof(filas));
+    item->valor = x;
+    item->prox = NULL;
+
+    if (fila->prox == NULL)
+    {
+        fila->prox = item;
+        return 1;
+    }
+
+    p = fila->prox;
+
+    while (p != NULL && p->valor > x)
+    {
+        ant = p;
+        p = p->prox;
+    }
+    if (ant == NULL) {
+      insere_inicio_lista(x, fila);
+
+    }
+    else{
+      item -> prox = p;
+      ant -> prox = item;
+    }
+
+    return 1;
+
+}
+
+int insere_inicio_lista(int x, filas*fila)
+{
+
+    filas *item = malloc(sizeof(filas));
+
+>>>>>>> 81f3b3f60a22276ffaf57ab04700ad8175790a76
     item-> valor = x;
     if (fila->prox == NULL)
     {
