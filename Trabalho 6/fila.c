@@ -1,38 +1,41 @@
 #include "fila.h"
 
-void inicializa_fila(filas *fila, int *prioridades) {
-    srand((unsigned)time(NULL));
-    for (int i = 0; i < MAX; i++) {
-      insere_ordenado_fila(1 + (rand() % 100), fila);
-    }
+int random_numero(int a){
+  
+  return (1 + (rand() % a));
 }
 
-<<<<<<< HEAD
+filas *inicializa_fila(filas *fila, int *prioridades) {
+  fila = malloc(sizeof(filas));
+  fila->prox = NULL;
+  return fila;
+}
 
-int insere_ordenado_fila(int x, filas *fila){
+
+int insere_ordenado_fila(int x, filas *fila, int prioridade){
     srand((unsigned)time(NULL));
     filas *item, *ant = NULL, *p;
 
     item = malloc(sizeof(filas));
-    item->valor = 1 + (rand() % 100;
-    item
+    item->valor= x;
+    item->prioridade = prioridade;
     item->prox = NULL;
 
-    if (fila->prox == NULL)
+    if (fila == NULL)
     {
-        fila->prox = item;
+        fila = item;
         return 1;
     }
 
     p = fila->prox;
 
-    while (p != NULL && p->valor > x)
+    while (p != NULL && p->prioridade >= prioridade)
     {
         ant = p;
         p = p->prox;
     }
     if (ant == NULL) {
-      insere_inicio_lista(x, fila);
+      insere_inicio_lista(x, fila, prioridade);
 
     }
     else{
@@ -44,56 +47,15 @@ int insere_ordenado_fila(int x, filas *fila){
 
 }
 
-int insere_inicio_lista(int x, filas*fila)
-{
+int insere_inicio_lista(int x, filas*fila, int prioridade){
 
     filas *item = malloc(sizeof(filas));
 
-=======
-
-int insere_ordenado_fila(int x, filas *fila){
-    filas *item, *ant = NULL, *p;
-
-    item = malloc(sizeof(filas));
-    item->valor = x;
-    item->prox = NULL;
-
-    if (fila->prox == NULL)
-    {
-        fila->prox = item;
-        return 1;
-    }
-
-    p = fila->prox;
-
-    while (p != NULL && p->valor > x)
-    {
-        ant = p;
-        p = p->prox;
-    }
-    if (ant == NULL) {
-      insere_inicio_lista(x, fila);
-
-    }
-    else{
-      item -> prox = p;
-      ant -> prox = item;
-    }
-
-    return 1;
-
-}
-
-int insere_inicio_lista(int x, filas*fila)
-{
-
-    filas *item = malloc(sizeof(filas));
-
->>>>>>> 81f3b3f60a22276ffaf57ab04700ad8175790a76
     item-> valor = x;
-    if (fila->prox == NULL)
+    item->prioridade = prioridade;
+    if (fila == NULL)
     {
-        fila->prox = item;
+        fila = item;
         item->prox = NULL;
     }
 
@@ -107,8 +69,7 @@ int insere_inicio_lista(int x, filas*fila)
 
 }
 
-int insere_fim_lista(int x, filas*fila)
-{
+int insere_fim_lista(int x, filas*fila){
     filas *item, *p;
     p = fila->prox;
     if ((item = malloc(sizeof(filas))) != NULL)
@@ -128,11 +89,29 @@ int insere_fim_lista(int x, filas*fila)
     return 0;
 }
 
+int remove_primeiro_lista(filas*fila){
+
+  fila = fila->prox;
+
+  return 1;
+}
+
+void destroi_fila(filas*fila) {
+    filas *p;
+    if (fila == NULL) {
+      printf("Nao destruida: lista vazia\n");
+      return;
+    }
+    for (p = fila; p != NULL; p = p->prox)
+      remove_primeiro_lista(fila);
+}
+
 void inicializa_prioridade(int *prioridades) {
     for (int i = 1; i < 5; i++) {
         prioridades[i] = 0;
     }
 }
+
 void imprime_lista(int *prioridades) {
     printf("+++ FIM DO EXPEDIENTE +++ \n\nATENDIDOS:\n\n");
     for (int i = 0; i < 5; i++) {
